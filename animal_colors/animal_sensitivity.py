@@ -32,6 +32,18 @@ class Sensitivity(object):
         elif animal.lower() == 'honeybee':
             self.honeybee()
 
+        elif animal.lower() == 'blue tit':
+            self.bluetit()
+
+        elif animal.lower() == 'turkey':
+            self.turkey()
+
+        elif animal.lower() == 'house fly':
+            self.housefly()
+
+        else:
+            raise ValueError('Animal not implemented yet.')
+
         self.set_contributions()
 
     
@@ -151,3 +163,64 @@ class Sensitivity(object):
         self.mapped = np.array([red, green, hb_blue]).T
 
     
+    def bluetit(self):
+        """
+        Creates sensitivity distribution for the blue tit.
+        """
+        red = self.pdf(self.wave_x, 580, 40)
+        red /= np.nanmax(red)
+
+        green = self.pdf(self.wave_x, 500, 40)
+        green /= np.nanmax(green)
+        
+        blue = self.pdf(self.wave_x, 420, 30)
+        blue /= np.nanmax(blue)
+        
+        ultra = self.pdf(self.wave_x, 340, 30)
+        ultra /= np.nanmax(ultra)
+        
+        blue = (blue+ultra)/np.nanmax(blue+ultra)
+
+        self.mapped = np.array([red, green, blue]).T
+
+    
+    def turkey(self):
+        """
+        Creates sensitivity distribution for the turkey.
+        """
+        red = self.pdf(self.wave_x, 590, 40)
+        red /= np.nanmax(red)
+        
+        green = self.pdf(self.wave_x, 530, 40)
+        green /= np.nanmax(green)
+        
+        blue = self.pdf(self.wave_x, 470, 30)
+        blue /= np.nanmax(blue)
+        
+        ultra = self.pdf(self.wave_x, 410, 30)
+        ultra /= np.nanmax(ultra)
+        
+        blue = (blue+ultra)/np.nanmax(blue+ultra)
+
+        self.mapped = np.array([red, green, blue]).T
+
+
+    def housefly(self):
+        """
+        Creates sensitivity distribution for the house fly.
+        """
+        red = self.pdf(self.wave_x, 590, 20)
+        red /= np.nanmax(red)
+
+        green = self.pdf(self.wave_x, 500, 40)
+        green /= np.nanmax(green)
+
+        subgreen = self.pdf(self.wave_x, 410, 60)
+        subgreen /= (np.nanmax(subgreen)*2)
+
+        green = (green+subgreen)/np.nanmax(green+subgreen)
+
+        blue = self.pdf(self.wave_x, 360, 30)
+        blue /= np.nanmax(blue)
+
+        self.mapped = np.array([red, green, blue]).T
